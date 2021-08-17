@@ -5,6 +5,15 @@ const app = express();
 // Set the port of our server
 const port = 8000;
 
+// Add some middleware
+app.use((req, res, next) => {
+  console.log(
+    `A ${req.method} request was sent to ${req.originalUrl} at`,
+    Date()
+  );
+  next();
+});
+
 // Set a route for GET /
 app.get("/", (req, res) => {
   res.json({ testData: "test" }).status(200);
@@ -17,7 +26,7 @@ app.get("/hello", (req, res) => {
 
 // Set a route for GET /hello/:name
 app.get("/hello/:name/", (req, res) => {
-  res.send(`Hello ${req.params.name}`).status(200);
+  res.send(`Hello ${req.params.name}!`).status(200);
 });
 
 // Start listening on a specific port
